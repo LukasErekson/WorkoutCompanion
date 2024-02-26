@@ -5,68 +5,76 @@
  * @format
  */
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  DefaultTheme,
+  DarkTheme,
+  NavigationContainer,
+  Theme,
+} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
-import HomeScreen from './screens/home/HomeScreen';
-import PastWorkoutScreen from './screens/pastWorkouts/PastWorkoutScreen';
+import WorkoutScreen from './components/workouts/WorkoutScreen';
+import PastWorkoutScreen from './components/pastWorkouts/PastWorkoutScreen';
 
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
+import ExerciseScreen from './components/exercises/ExerciseScreen';
+import SettingsScreen from './components/settings/SettingsScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
-  Home: undefined;
-  Excercises: undefined;
+  Workouts: undefined;
+  Exercises: undefined;
   'Past Workouts': undefined;
   Settings: undefined;
 };
 
 const Stack = createMaterialBottomTabNavigator<RootStackParamList>();
 
-export type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+export type Props = NativeStackScreenProps<RootStackParamList, 'Workouts'>;
+
+const MyTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#F53C2F',
+  },
+};
+
+const mainAppStyles = StyleSheet.create({});
+const navigationBarStyles = {
+  colors: {
+    primary: MyTheme.colors.primary,
+    active: 'black',
+    inactive: 'white',
+  },
+};
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#000000' : '#FFFFFF',
-  };
+  const theme = isDarkMode ? DarkTheme : MyTheme;
 
   return (
     <PaperProvider>
-      <NavigationContainer>
-        {/* <SafeAreaView style={backgroundStyle}>
-          <StatusBar
-            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            backgroundColor={backgroundStyle.backgroundColor}
-          /> */}
+      <NavigationContainer theme={theme}>
         <Stack.Navigator
-          initialRouteName="Home"
-          activeColor="black"
-          inactiveColor="white"
-          barStyle={{backgroundColor: '#55aaff'}}
-          // theme
-        >
+          initialRouteName="Workouts"
+          activeColor={navigationBarStyles.colors.active}
+          inactiveColor={navigationBarStyles.colors.inactive}
+          barStyle={{backgroundColor: navigationBarStyles.colors.primary}}>
           <Stack.Screen
-            name="Home"
-            component={HomeScreen}
+            name="Workouts"
+            component={WorkoutScreen}
             options={{
               title: 'Workout',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="weight-lifter"
-                  color={color}
-                  size={26}
-                />
-              ),
+              tabBarIcon: 'weight-lifter',
             }}
           />
           <Stack.Screen
             name="Exercises"
-            component={PastWorkoutScreen}
+            component={ExerciseScreen}
             options={{
               title: 'Exercises',
               tabBarIcon: ({color}) => (
@@ -78,28 +86,27 @@ function App(): React.JSX.Element {
               ),
             }}
           />
+          {/* ({color}) => (
+                <MaterialCommunityIcons
+                  name="dumbbell"
+                  color={color}
+                  size={26}
+                />
+              ) */}
           <Stack.Screen
             name="Past Workouts"
             component={PastWorkoutScreen}
             options={{
               title: 'Workout History',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="history"
-                  color={color}
-                  size={26}
-                />
-              ),
+              tabBarIcon: 'history',
             }}
           />
           <Stack.Screen
             name="Settings"
-            component={PastWorkoutScreen}
+            component={SettingsScreen}
             options={{
               title: 'Settings',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="cog" color={color} size={26} />
-              ),
+              tabBarIcon: 'cog',
             }}
           />
         </Stack.Navigator>
@@ -113,7 +120,5 @@ function App(): React.JSX.Element {
     </PaperProvider>
   );
 }
-
-const mainAppStyles = StyleSheet.create({});
 
 export default App;
