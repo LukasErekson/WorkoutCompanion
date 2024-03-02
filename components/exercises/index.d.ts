@@ -5,9 +5,9 @@ type Exercise = {
   sets: number;
   weight: number | string | null;
   weightUnits?: 'lbs' | 'kg' | 'body weight';
-  image?: string; // Path?
-  rep_min?: number | string;
-  rep_max?: number | string;
+  image?: any; // Path?
+  rep_min: number | string;
+  rep_max: number | string;
   description?: string;
 };
 
