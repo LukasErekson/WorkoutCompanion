@@ -34,7 +34,7 @@ function ExerciseList({route, navigation}): JSX.Element {
   return (
     <View>
       <ExerciseCard exerciseInfo={sampleExercise} navigation={navigation} />
-      <ExerciseCard exerciseInfo={sampleExercise2} />
+      <ExerciseCard exerciseInfo={sampleExercise2} navigation={navigation} />
     </View>
   );
 }
