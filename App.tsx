@@ -6,8 +6,8 @@
  */
 
 import {
-  DefaultTheme,
   DarkTheme,
+  DefaultTheme,
   NavigationContainer,
   Theme,
 } from '@react-navigation/native';
@@ -15,16 +15,17 @@ import React from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import WorkoutScreen from './components/workouts/WorkoutScreen';
-import PastWorkoutScreen from './components/pastWorkouts/PastWorkoutScreen';
 
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
-import ExerciseScreen from './components/exercises/ExerciseScreen';
-import SettingsScreen from './components/settings/SettingsScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ExerciseScreen from './components/exercises/ExerciseScreen';
+import RoutineScreen from './components/routines/RoutineScreen';
+import SettingsScreen from './components/settings/SettingsScreen';
 
 export type RootStackParamList = {
   Workouts: undefined;
+  Routines: undefined;
   Exercises: undefined;
   'Past Workouts': undefined;
   Settings: undefined;
@@ -86,19 +87,14 @@ function App(): React.JSX.Element {
               ),
             }}
           />
-          {/* ({color}) => (
-                <MaterialCommunityIcons
-                  name="dumbbell"
-                  color={color}
-                  size={26}
-                />
-              ) */}
           <Stack.Screen
-            name="Past Workouts"
-            component={PastWorkoutScreen}
+            name="Routines"
+            component={RoutineScreen}
             options={{
-              title: 'Workout History',
-              tabBarIcon: 'history',
+              title: 'Routines',
+              tabBarIcon: ({color}) => (
+                <MaterialCommunityIcons name="run" color={color} size={26} />
+              ),
             }}
           />
           <Stack.Screen
@@ -110,12 +106,6 @@ function App(): React.JSX.Element {
             }}
           />
         </Stack.Navigator>
-        {/* <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
-            <Text>Hello there!</Text>
-          </ScrollView> */}
-        {/* </SafeAreaView> */}
       </NavigationContainer>
     </PaperProvider>
   );

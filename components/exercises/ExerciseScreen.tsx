@@ -1,9 +1,8 @@
+import {RouteProp} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {View, Text} from 'react-native';
-import ExerciseList from './ExerciseList';
 import ExerciseDetails from './ExerciseDetails';
-import {RouteProp} from '@react-navigation/native';
+import ExerciseList from './ExerciseList';
 
 export type ExerciseStackParamList = {
   Home: undefined;
