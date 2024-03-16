@@ -22,6 +22,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ExerciseScreen from './components/exercises/ExerciseScreen';
 import RoutineScreen from './components/routines/RoutineScreen';
 import SettingsScreen from './components/settings/SettingsScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
   Workouts: undefined;
@@ -58,56 +59,58 @@ function App(): React.JSX.Element {
   const theme = isDarkMode ? DarkTheme : MyTheme;
 
   return (
-    <PaperProvider>
-      <NavigationContainer theme={theme}>
-        <Stack.Navigator
-          initialRouteName="Workouts"
-          activeColor={navigationBarStyles.colors.active}
-          inactiveColor={navigationBarStyles.colors.inactive}
-          barStyle={{backgroundColor: navigationBarStyles.colors.primary}}>
-          <Stack.Screen
-            name="Workouts"
-            component={WorkoutScreen}
-            options={{
-              title: 'Workout',
-              tabBarIcon: 'weight-lifter',
-            }}
-          />
-          <Stack.Screen
-            name="Exercises"
-            component={ExerciseScreen}
-            options={{
-              title: 'Exercises',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="dumbbell"
-                  color={color}
-                  size={26}
-                />
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="Routines"
-            component={RoutineScreen}
-            options={{
-              title: 'Routines',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="run" color={color} size={26} />
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{
-              title: 'Settings',
-              tabBarIcon: 'cog',
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <SafeAreaProvider>
+      <PaperProvider>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator
+            initialRouteName="Workouts"
+            activeColor={navigationBarStyles.colors.active}
+            inactiveColor={navigationBarStyles.colors.inactive}
+            barStyle={{backgroundColor: navigationBarStyles.colors.primary}}>
+            <Stack.Screen
+              name="Workouts"
+              component={WorkoutScreen}
+              options={{
+                title: 'Workout',
+                tabBarIcon: 'weight-lifter',
+              }}
+            />
+            <Stack.Screen
+              name="Exercises"
+              component={ExerciseScreen}
+              options={{
+                title: 'Exercises',
+                tabBarIcon: ({color}) => (
+                  <MaterialCommunityIcons
+                    name="dumbbell"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Routines"
+              component={RoutineScreen}
+              options={{
+                title: 'Routines',
+                tabBarIcon: ({color}) => (
+                  <MaterialCommunityIcons name="run" color={color} size={26} />
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{
+                title: 'Settings',
+                tabBarIcon: 'cog',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }
 

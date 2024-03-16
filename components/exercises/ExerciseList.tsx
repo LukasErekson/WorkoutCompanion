@@ -1,6 +1,6 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Exercise} from '.';
+import { View } from 'react-native';
+import { Exercise } from '.';
 import ExerciseCard from './ExerciseCard';
 
 const sampleExercise: Exercise = {
@@ -18,11 +18,16 @@ const sampleExercise2: Exercise = {
     'Be sure to arch your back and keep your arms at a 45 degree angle.',
 };
 
-function ExerciseList({route, navigation}): JSX.Element {
+const newExercise: Exercise = {
+  name: 'Create new exercise',
+};
+
+function ExerciseList({ route, navigation }): JSX.Element {
   return (
     <View>
       <ExerciseCard exerciseInfo={sampleExercise} navigation={navigation} />
       <ExerciseCard exerciseInfo={sampleExercise2} navigation={navigation} />
+      <ExerciseCard exerciseInfo={newExercise} navigation={navigation} />
     </View>
   );
 }

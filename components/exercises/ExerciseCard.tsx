@@ -1,11 +1,58 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from 'react-native-paper';
-import {Exercise} from '.';
+import { Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text } from 'react-native-paper';
+import { Exercise } from '.';
+import { Button, ListItem } from '@rneui/base';
+
+type DeleteExerciseSwipableProps = {
+  reset: () => void;
+  exerciseInfo: Exercise;
+};
+
+function DeleteExerciseSwipable({
+  reset,
+  exerciseInfo,
+}: DeleteExerciseSwipableProps): JSX.Element {
+  return (
+    <Button
+      title="Delete"
+      onPress={() => {
+        reset();
+        // TODO : Navigate to confirmation of deletion and remove the exercise.
+        console.log(exerciseInfo);
+      }}
+      icon={{ name: 'delete', color: 'white' }}
+      buttonStyle={{ minHeight: '100%', backgroundColor: 'red' }}
+    />
+  );
+}
+
+type EditExerciseSwipableProps = {
+  reset: () => void;
+  exerciseInfo: Exercise;
+};
+
+function EditExerciseSwipableProps({
+  reset,
+  exerciseInfo,
+}: EditExerciseSwipableProps): JSX.Element {
+  return (
+    <Button
+      title={'Edit ' + exerciseInfo.name}
+      onPress={() => {
+        reset();
+        // TODO: Navigate to the edit menu
+        console.log(exerciseInfo);
+      }}
+      icon={{ name: 'edit', color: 'white' }}
+      buttonStyle={{ minHeight: '100%' }}
+    />
+  );
+}
 
 type ExerciseCardProps = {
   exerciseInfo: Exercise;
-  navigation: {navigate: Function};
+  navigation: { navigate: Function };
 };
 
 function ExerciseCard({
@@ -15,25 +62,29 @@ function ExerciseCard({
   const image = exerciseInfo.image ? exerciseInfo.image : null;
 
   return (
-    <TouchableOpacity
-      style={cardStyle.cardContainer}
+    <ListItem.Swipeable
+      Component={TouchableHighlight}
       onPress={() =>
-        navigation.navigate('ExerciseDetails', {exerciseInfo: exerciseInfo})
-      }>
-      <Image source={image} style={cardStyle.image} alt={'What'} />
-
-      <View style={cardStyle.cardText}>
-        <Text style={cardStyle.title}>{exerciseInfo.name}</Text>
-        {/* <Text style={cardStyle.sets}>
-          {exerciseInfo.sets} set{exerciseInfo.sets > 1 ? 's' : ''} of{' '}
-          {exerciseInfo.rep_min} - {exerciseInfo.rep_max} reps
-        </Text> */}
-        {/* <Text style={cardStyle.restTime}>
-          Rest {exerciseInfo.restTime} between sets
-      </Text> */}
-        <Text style={cardStyle.description}>{exerciseInfo.description} </Text>
-      </View>
-    </TouchableOpacity>
+        navigation.navigate('ExerciseDetails', { exerciseInfo: exerciseInfo })
+      }
+      leftContent={(reset: () => void) => (
+        <DeleteExerciseSwipable reset={reset} exerciseInfo={exerciseInfo} />
+      )}
+      rightContent={(reset: () => void) => (
+        <EditExerciseSwipableProps reset={reset} exerciseInfo={exerciseInfo} />
+      )}
+      bottomDivider>
+      {image && (
+        <Image source={image} style={cardStyle.image} alt={exerciseInfo.name} />
+      )}
+      <ListItem.Content>
+        <ListItem.Title style={cardStyle.title}>
+          {exerciseInfo.name}
+        </ListItem.Title>
+        <Text>{exerciseInfo.description} </Text>
+      </ListItem.Content>
+      <ListItem.Chevron />
+    </ListItem.Swipeable>
   );
 }
 
@@ -47,11 +98,6 @@ const cardStyle = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     minHeight: 100,
-  },
-  cardText: {
-    // backgroundColor: 'rgba(0,0,0,0.25)',
-    display: 'flex',
-    width: '55%',
   },
   description: {
     textAlign: 'justify',

@@ -1,5 +1,5 @@
-import {RouteProp} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import ExerciseDetails from './ExerciseDetails';
 import ExerciseList from './ExerciseList';
@@ -17,7 +17,7 @@ function ExerciseScreen(): JSX.Element {
     <ExercisesStack.Navigator initialRouteName="Home">
       <ExercisesStack.Screen
         name="Home"
-        options={{title: 'Exercise List'}}
+        options={{ title: 'Exercise List' }}
         component={ExerciseList}
       />
       <ExercisesStack.Screen
